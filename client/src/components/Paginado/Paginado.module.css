@@ -1,0 +1,26 @@
+.botonPaginado {
+    
+background:linear-gradient(to bottom, red 20%, white 100%);
+background-color: red ;
+border-radius:42px;
+cursor:pointer;
+color:black;
+font-family:Georgia;
+font-size:20px;
+font-weight:bold;
+padding:10px 17px;
+text-decoration:none;
+}
+.botonPaginado:hover{
+background:linear-gradient(to bottom, white 5%, red 100%);
+background-color: red ;
+color:black;
+}
+
+.paginadoContenedor{
+    display:flex;
+    justify-content: center;
+    gap: 6px;
+
+}
+

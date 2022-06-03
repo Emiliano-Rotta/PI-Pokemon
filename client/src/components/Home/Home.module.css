@@ -1,0 +1,125 @@
+.contenedorBotones{
+    position: fixed;
+    margin-top: 100px;
+    width: 100%;
+    background-color: rgb(245, 245, 47);
+
+}
+.titulo{
+    position: fixed;
+    margin-top: 0px;
+    width: 100%;
+    background-color: rgb(245, 245, 47);
+    color: red;
+	font-weight: normal;
+	font-size: 40px;
+    font-family: "Sofia", cursive;
+	/* font-family:  Tahoma ; */
+    /* font-style: italic; */
+    font-weight:600;
+    /* font-size-adjust:initial; */
+	/* text-transform: uppercase; */
+
+}
+
+.volver {
+ 
+    color:white;
+    cursor:pointer;
+    color:red;
+    font-family:Verdana;
+    font-size:14px;
+    font-weight:bold;
+    font-style:normal;
+    padding:5px 5px;
+    text-decoration:none;      
+}
+.volver:hover{
+
+    background:linear-gradient(to bottom, #ff0000 5%, #b81111 100%);
+    background-color:#d42a2a;
+    cursor:pointer;
+    color:white;
+    font-family:Verdana;
+    font-size:14px;
+    font-weight:bold;
+    font-style:normal;
+    padding:5px 5px;
+    text-decoration:none;      
+}
+
+.boton {
+    background:linear-gradient(to bottom, #ff0000 5%, #b81111 100%);
+    background-color:#d42a2a;
+        /* border-radius:42px; */
+        display:inline-block;
+        cursor:pointer;
+        color:white;
+        font-family:Verdana;
+        font-size:14px;
+        font-weight:bold;
+        font-style:normal;
+        padding:5px 25px;
+        text-decoration:none;
+        
+    }
+
+a:link, a:visited, a:active {
+    text-decoration:none;
+}
+
+.container{
+    display:grid;
+    grid-template-columns: repeat(3,4fr);
+    gap: 15px 15px;
+    margin: 15px;
+    
+    /* background-color: red */
+}
+   
+
+.boton1 {
+    background:linear-gradient(to bottom, #ff0000 5%, #b81111 100%);
+    background-color:red;
+    /* border-radius:42px; */
+    display:inline-block;
+    /* cursor:pointer; */
+    color:white;
+    font-family:Verdana;
+    font-size:14px;
+    font-weight:bold;
+    font-style:normal;
+    padding:5px 25px;
+    text-decoration:none;
+    
+}
+.boton2 {
+    background:linear-gradient(to bottom, #ff0000 5%, #b81111 100%);
+    background-color:red;
+    /* border-radius:42px; */
+    display:inline-block;
+    cursor:pointer;
+    color:white;
+    font-family:Verdana;
+    font-size:13px;
+    font-weight:bold;
+    font-style:normal;
+    padding:0px 0px;
+    text-decoration:none;
+    
+}
+.imagen{
+    width: 350px;
+    height: 150px;
+    margin-top: 50px;
+}
+.imagen2{
+    width: 120px;
+    height: 120px;
+    margin-top: 50px;
+}
+.gif{
+    width: 150px;
+    height: auto;
+    margin-left: 137%;
+ }
