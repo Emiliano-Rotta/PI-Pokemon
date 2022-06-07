@@ -29,10 +29,10 @@ return (
                 <img src = {myPokemon[0].image} alt = "" className ={style.image}/>
                 <p className ={style.id}>{myPokemon[0].createdInDb ? "Id: " : "" } {myPokemon[0].createdInDb ? "(" + (myPokemon[0].id) + ")" : "" }</p>
                 <h4 className ={style.tipos}>Tipo:
-                {myPokemon[0].createdInDb ? myPokemon[0].tipos.map(e=> " -" + e.name.charAt(0).toUpperCase() + e.name.slice(1)) : myPokemon[0].types.map(e => " -" + e.charAt(0).toUpperCase() + e.slice(1))  }</h4>
+                {myPokemon[0].types.map(e=> " -" + e.name.charAt(0).toUpperCase() + e.name.slice(1)) }</h4>
                 <h4 className ={style.ayp}>Altura: {myPokemon[0].height} Peso: {myPokemon[0].weight}</h4>
                 <h4 className ={style.Estadisticas}>Estadisticas: </h4>
-                <h5 className ={style.Estadisticas2}>Vida: {myPokemon[0].life}; Fuerza: {myPokemon[0].attack}; Defenza: {myPokemon[0].defense}; Velocidad: {myPokemon[0].speed}. </h5>
+                <h5 className ={style.Estadisticas2}>Vida: {myPokemon[0].life}; Fuerza: {myPokemon[0].attack}; Defensa: {myPokemon[0].defense}; Velocidad: {myPokemon[0].speed}. </h5>
 
 
                 <Link to = "/home/" >

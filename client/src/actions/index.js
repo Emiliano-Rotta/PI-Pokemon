@@ -5,6 +5,7 @@ export function getpok (){
         try {
         // despachar una accion que ponga al loading en true
         var json = await axios.get ("http://localhost:3001/pokemons"); 
+        // dispatch({ type: SET_LOADING, payload: "" })
         return dispatch({      
         type: "GET_POK", 
         payload: json.data
@@ -19,15 +20,19 @@ export function getpok (){
 }
 //buscar
 export function getNamePok(name){
+    console.log("llegueeeeee")
     return async function (dispatch){
         try{
             var json = await axios.get ("http://localhost:3001/pokemons?name=" + name);
+            // dispatch({ type: SET_LOADING, payload: "" })
+            console.log("json: ", json)
             return dispatch({
                 type: "GET_NAME_POK",
                 payload: json.data
 
             })
         }catch (error){
+            // dispatch({ type: SET_LOADING, payload: "" })
             alert ("Pokemon no encontrado, verifique haber escrito bien el nombre")
         console.log (error)
     }
@@ -103,3 +108,10 @@ export function filterPokByTypes(payload){
          payload
     }
  }
+
+
+//  export const SET_LOADING = 'SET_LOADING';
+//  export const setLoading = (payload) => {
+//     return { type: SET_LOADING, payload };
+// };
+ 

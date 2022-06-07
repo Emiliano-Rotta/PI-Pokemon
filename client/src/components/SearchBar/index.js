@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"; 
 import { getNamePok } from "../../actions";
 import style from './SearchBar.module.css';
 
@@ -8,6 +8,7 @@ import style from './SearchBar.module.css';
 export default function SearchBar({setCurrentPage}){
     const dispatch = useDispatch()
     const [name, setName] = useState ("")
+    const allPok = useSelector ((state) => state.detail);
 
 
     function handleInputChange (e){
@@ -25,14 +26,15 @@ export default function SearchBar({setCurrentPage}){
         if(name !== ""){
         dispatch(getNamePok(name));
         console.log (name)
-        setName("");}
+        // setName("");
+    }
 
         else{
         alert("Ingresa un nombre para buscar")
         }
     }
 
-
+    // if (!allPok.length>0) { 
 
     return (
        
@@ -53,4 +55,5 @@ export default function SearchBar({setCurrentPage}){
             </div></form>
         </div>
     )
+// } else { return <img className ={style.gif} src = "https://stickers.wiki/static/stickers/pokeanimated/file_61981.gif"></img>} 
 }

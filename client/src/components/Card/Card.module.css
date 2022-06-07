@@ -8,10 +8,11 @@
     align-items: center;
     padding: 30px;
     border-radius: 15px;
+    margin-left: 3%;
 
 }
 .image{
-width: 90%;
+width: 50%;
 height:auto;
 margin-top: -30px;
 }

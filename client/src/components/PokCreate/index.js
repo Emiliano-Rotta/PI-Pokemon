@@ -4,47 +4,11 @@ import { postPok, getTipo } from "../../actions";
 import { useDispatch, useSelector } from 'react-redux';
 import style from "./PokCreate.module.css";
 
-
-function validate(input){
-    let errors = {};
-  
-    if(!input.name || !/^[a-z]+[A-Za-z0-9\s]+$/g.test(input.name)){
-        errors.name = 'Al menos dos caracteres el primero, letra minúscula.';
-    }
-    if(!input.life || !/^[1-9]\d*(\.\d+)?$/.test(input.life)){
-        errors.life = 'El número tiene que ser positivo.';
-    }
-    if(!input.attack || !/^[1-9]\d*(\.\d+)?$/.test(input.attack)){
-        errors.attack = 'El número tiene que ser positivo.';
-    }
-    if(!input.defense  || !/^[1-9]\d*(\.\d+)?$/.test(input.defense)){
-        errors.defense = 'El número tiene que ser positivo.';
-    }
-    if(!input.speed || !/^[1-9]\d*(\.\d+)?$/.test(input.speed)){
-        errors.speed = 'El número tiene que ser positivo.';
-    }
-    if(!input.height || !/^[1-9]\d*(\.\d+)?$/.test(input.height)){
-        errors.height = 'El número tiene que ser positivo.';
-    }
-    if(!input.weight || !/^[1-9]\d*(\.\d+)?$/.test(input.weight)){
-        errors.weight = 'El número tiene que ser positivo.';
-    }
-    if (input.image && !/[a-z0-9-.]+\.[a-z]{2,4}\/?([^\s<>#%",{}\\|^[\]`]+)?$/.test(input.image) ){
-        errors.image = 'Debe ser una URL';
-    }
-    if (!input.types){
-        errors.types = 'Elegir minimo un tipo';
-    }
-    return errors
-    
-
-    
-}
-
 export default function PokCreate(){
     const dispatch = useDispatch()
     const history = useHistory()
     const types = useSelector((state)=> state.types)
+    const allPok = useSelector((state) => state.allPok)
     const [errors, setErrors] = useState({})
 
     const[input, setInput] = useState({
@@ -60,22 +24,64 @@ export default function PokCreate(){
         
     })
 
+        function validate(input){
+            let errors = {};
 
-    function handleChange(e){
-        e.preventDefault ();
-        setInput({
+            if  ( allPok.find ( (e)  =>  e.name.toUpperCase ()  ===  input.name.toUpperCase () )   || input.name === "ditto" || input.name === "zubat"){
+                errors.name = "Ya existe un pokemon con ese nombre, prueba con escoger otro";
+            }
+            if(!input.name || !/^[a-z]+[A-Za-z0-9\s]+$/g.test(input.name)){
+                errors.name = 'Al menos dos caracteres el primero, letra minúscula.';
+            }
+
+            if(!input.life || !/^[1-9]\d*(\.\d+)?$/.test(input.life)){
+                errors.life = 'El número tiene que ser positivo.';
+            }
+            if(!input.attack || !/^[1-9]\d*(\.\d+)?$/.test(input.attack)){
+                errors.attack = 'El número tiene que ser positivo.';
+            }
+            if(!input.defense  || !/^[1-9]\d*(\.\d+)?$/.test(input.defense)){
+                errors.defense = 'El número tiene que ser positivo.';
+            }
+            if(!input.speed || !/^[1-9]\d*(\.\d+)?$/.test(input.speed)){
+                errors.speed = 'El número tiene que ser positivo.';
+            }
+            if(!input.height || !/^[1-9]\d*(\.\d+)?$/.test(input.height)){
+                errors.height = 'El número tiene que ser positivo.';
+            }
+            if(!input.weight || !/^[1-9]\d*(\.\d+)?$/.test(input.weight)){
+                errors.weight = 'El número tiene que ser positivo.';
+            }
+            if (!input.image || !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(input.image) ){
+                errors.image = 'Debe ser una URL';
+            }
+            if (!input.types){
+                errors.types = 'Elegir minimo un tipo';
+            }
+            return errors
+
+
+    
+        }
+
+
+
+
+function handleChange(e){
+    e.preventDefault ();
+    setInput({
+    ...input,
+    [e.target.name] : e.target.value,
+    });
+    setErrors(validate({
         ...input,
-        [e.target.name] : e.target.value
-        })
-        setErrors(validate({
-            ...input,
-            [e.target.name]: e.target.value
+        [e.target.name]: e.target.value
 
-        }));console.log (input)
-    }
+    }));console.log (input)
+}
 
 function handleSelect(e){
-    if (input.types.includes(e.target.value)) {
+     if (input.types.includes(e.target.value)) {
       setInput({
         ...input,
         types: input.types,
@@ -103,6 +109,7 @@ function handleSelect(e){
         console.log(input)
         if(input.name.length >1
         && input.name.charAt(0).toUpperCase() !== input.name.charAt(0)
+        && !errors.hasOwnProperty("name") //devuelve un buleano si el objeto tiene la propiedad especificada 
         && input.image.length >20
         && input.life.length > 0
         && input.attack.length > 0
@@ -110,7 +117,8 @@ function handleSelect(e){
         && input.speed.length > 0
         && input.height.length > 0
         && input.weight.length > 0
-        && input.types.length > 0 )
+        && input.types.length > 0 
+        )
 
         {dispatch(postPok(input))
         alert ("Pokemon creado con exito")

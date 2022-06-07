@@ -1,9 +1,11 @@
+// import { SET_LOADING } from '../actions/index';
 const initialState ={
     pokemon: [],
     allPok: [],
     types: [],
     detail: [],
-    // loading: true,
+    // loading: false,
+    // loading: "Loading...",
 }
 
     function rootReducer (state = initialState, action){
@@ -105,17 +107,19 @@ const initialState ={
                 case "FILTER_BY_TYPES":
             
                     const allPok = state.allPok;
-                    const typeFiltered = allPok.filter( (e) =>
-                                e.types && e.types.includes(action.payload) 
-                            )
-                            // .concat (allPok.filter (e =>  e.tipos? .includes(action.payload)))
-                            //  || allPok.filter (e =>  e.tipos.includes(action.payload) ) 
-                
+                    const typeFiltered = allPok.filter(e => (e.types[0]?.name === action.payload || e.types[1]?.name === action.payload || e.types[2]?.name === action.payload || e.types[3]?.name === action.payload || e.types[4]?.name === action.payload || e.types[5]?.name === action.payload))
+
                     return {
                         ...state, 
                         pokemon: typeFiltered,
                     };
 
+
+            //     case SET_LOADING:
+            //         return {
+            //         ...state,
+            //         loading: (action.payload)
+            // }       
 
                 default:
                     return state;

@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";  //usa hook
 import {getpok, orderByAttack, orderByName, filterCreated, getTipo, filterPokByTypes  } from "../../actions";
-
 import {Link} from "react-router-dom";
 import Card from "../Card";
 import Paginado from "../Paginado";
@@ -35,7 +34,8 @@ const types = useSelector ((state) =>state.types)
 
     const indiceUltimoP = currentPage * pokPerPage //12
     const indicePrimerP = indiceUltimoP - pokPerPage //0
-    const currentPok = allPok.slice(indicePrimerP, indiceUltimoP)// slice me trae una copia en la que eloriginal n se destruye
+    console.log("all: ", allPok)
+    const currentPok = allPok?.slice(indicePrimerP, indiceUltimoP)// slice me trae una copia en la que eloriginal n se destruye
     const paginado = (pageNumber) =>{
         setCurrentPage (pageNumber)
     }
@@ -59,6 +59,7 @@ const types = useSelector ((state) =>state.types)
         e.preventDefault();
         dispatch(getpok());
         setCurrentPage (1);
+        
     }
     
     
@@ -82,7 +83,7 @@ const types = useSelector ((state) =>state.types)
         setOrden (`Ordenado ${e.target.value}`)
     }
    
-    
+
 
     return (
         <div >
@@ -101,11 +102,12 @@ const types = useSelector ((state) =>state.types)
                   
              <select  className ={style.boton2} onChange ={(e)=>handleSelect(e)}>
                 
-                 {types.map((tem) => {
+                 {types.length && types.map((tem) => {
                        return (
                         <option key = {tem.id} value ={tem.name}> {tem.name} </option>
                        )
-                   })} 
+                   })
+                  } 
                </select></label>
 
             <select className ={style.boton}  onChange={e =>handleFilterCreated(e)}  >
@@ -130,18 +132,20 @@ const types = useSelector ((state) =>state.types)
             </select>
             <Link to = "/types"><button className ={style.boton}>Crea tu Pokemon </button></Link>
             
-            <button className ={style.volver}  onClick={e=> {handleClick(e)}}>
-            Volver a cargar
+            <button className ={style.volver}  onClick={e=> {handleClick(e)}} >
+                Volver a cargar 
              </button> 
              
 
             
             </div><br/><br/><br/><br/>
-            <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img>
+            {/* <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img> */}
             <img className ={style.imagen}src = "https://pngimg.com/uploads/pokemon/pokemon_PNG98.png"></img>
-            <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img>          
+            {/* <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img>           */}
                       
+            {/* <div class = "ldsring loader" id = "loader">  </div> */}
 
+            
           
              <div> 
                 <Paginado
@@ -164,7 +168,7 @@ const types = useSelector ((state) =>state.types)
                         <Card 
                         name ={p.name.charAt(0).toUpperCase() + p.name.slice(1) }  
                         image ={p.image}    
-                        types={!p.createdInDb ? p.types.map(e =>" -" + e.charAt(0).toUpperCase() + e.slice(1)) : p.tipos.map(e=>" -" + e.name.charAt(0).toUpperCase() + e.name.slice(1)) }   
+                        types={p.types.map(e=> " -" + e.name.charAt(0).toUpperCase() + e.name.slice(1))  }   
                         attack = {p.attack}
                         key={p.id}/>
                     </Link>  
