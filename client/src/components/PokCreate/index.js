@@ -27,7 +27,7 @@ export default function PokCreate(){
         function validate(input){
             let errors = {};
 
-            if  ( allPok.find ( (e)  =>  e.name.toUpperCase ()  ===  input.name.toUpperCase () )   || input.name === "ditto" || input.name === "zubat"){
+            if  ( allPok.find ( (e)  =>  e.name.toUpperCase ()  ===  input.name.toUpperCase () )                               || input.name === "ditto" || input.name === "zubat"){
                 errors.name = "Ya existe un pokemon con ese nombre, prueba con escoger otro";
             }
             if(!input.name || !/^[a-z]+[A-Za-z0-9\s]+$/g.test(input.name)){
@@ -82,11 +82,11 @@ function handleChange(e){
 
 function handleSelect(e){
      if (input.types.includes(e.target.value)) {
-      setInput({
-        ...input,
-        types: input.types,
-      });
-    } else {
+        setInput({
+          ...input,
+          types: input.types,
+        });
+      } else {
       setInput({
         ...input,
         types: [...input.types, e.target.value],
@@ -106,7 +106,7 @@ function handleSelect(e){
     
     function handleSubmit(e){
         e.preventDefault()
-        console.log(input)
+        // console.log(input)
         if(input.name.length >1
         && input.name.charAt(0).toUpperCase() !== input.name.charAt(0)
         && !errors.hasOwnProperty("name") //devuelve un buleano si el objeto tiene la propiedad especificada 
@@ -147,7 +147,6 @@ function handleSelect(e){
 
     return(
         <div>
-            {/* <h1 className = {style.titulo}>Creá tu propia Pokemon!!!! </h1> */}
             <h6><img className ={style.imagen}src = "https://pngimg.com/uploads/pokemon/pokemon_PNG98.png"></img></h6>
             
             <form className ={style.contenedor}  onSubmit = {(e)=>handleSubmit(e)} >

@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
 import {useDispatch, useSelector} from "react-redux";  //usa hook
-import {getpok, orderByAttack, orderByName, filterCreated, getTipo, filterPokByTypes  } from "../../actions";
+import {getpok, orderByAttack, orderByName, filterCreated, getTipo, filterPokByTypes, volver  } from "../../actions";
 import {Link} from "react-router-dom";
 import Card from "../Card";
 import Paginado from "../Paginado";
@@ -11,8 +11,8 @@ import style from "./Home.module.css";
 
 export default function Home (){
     const dispatch = useDispatch()
-    const allPok = useSelector ((state) => state.pokemon); //en allPok traeme todo lo que esta en el estado pokemon
-    const myPokemon = useSelector ((state)=> state.detail)
+    const pokemon = useSelector ((state) => state.pokemon); 
+    
 
 const [input, setInput] = useState ({
     name: "",
@@ -34,8 +34,7 @@ const types = useSelector ((state) =>state.types)
 
     const indiceUltimoP = currentPage * pokPerPage //12
     const indicePrimerP = indiceUltimoP - pokPerPage //0
-    console.log("all: ", allPok)
-    const currentPok = allPok?.slice(indicePrimerP, indiceUltimoP)// slice me trae una copia en la que eloriginal n se destruye
+    const currentPok = pokemon?.slice(indicePrimerP, indiceUltimoP)// slice me trae una copia en la que eloriginal n se destruye
     const paginado = (pageNumber) =>{
         setCurrentPage (pageNumber)
     }
@@ -44,6 +43,7 @@ const types = useSelector ((state) =>state.types)
     useEffect(()=>{
         dispatch (getpok());
         dispatch(getTipo());
+        dispatch(volver());
         setCurrentPage (1);
     },[dispatch])
 
@@ -57,7 +57,7 @@ const types = useSelector ((state) =>state.types)
     }
     function handleClick (e){
         e.preventDefault();
-        dispatch(getpok());
+        dispatch(volver());
         setCurrentPage (1);
         
     }
@@ -100,11 +100,11 @@ const types = useSelector ((state) =>state.types)
                   <label className={style.boton1}>
                     Tipos: 
                   
-             <select  className ={style.boton2} onChange ={(e)=>handleSelect(e)}>
-                
-                 {types.length && types.map((tem) => {
+             <select   className ={style.boton2} onChange ={(e)=>handleSelect(e)}>
+             
+                 {types.length && types.map((type) => {
                        return (
-                        <option key = {tem.id} value ={tem.name}> {tem.name} </option>
+                        <option   key = {type.id} value ={type.name}> {type.name} </option>
                        )
                    })
                   } 
@@ -142,16 +142,13 @@ const types = useSelector ((state) =>state.types)
             {/* <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img> */}
             <img className ={style.imagen}src = "https://pngimg.com/uploads/pokemon/pokemon_PNG98.png"></img>
             {/* <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img>           */}
-                      
-            {/* <div class = "ldsring loader" id = "loader">  </div> */}
-
-            
+                              
           
              <div> 
                 <Paginado
                
                 pokPerPage={pokPerPage}
-                allPok ={allPok.length}
+                pokemon ={pokemon.length}
                 paginado ={paginado}
                 
                 />
@@ -160,8 +157,7 @@ const types = useSelector ((state) =>state.types)
                    
         
          <div className = {style.container}>  
-        {/* loading distinto de falso,  */}
-        {currentPok.length>0? currentPok.map ((p) =>{ 
+           {currentPok.length>0? currentPok.map ((p) =>{ 
             return(
                 <Fragment >                    
                      <Link  to = {"/home/" + p.id}> 
@@ -186,7 +182,7 @@ const types = useSelector ((state) =>state.types)
                 <Paginado
                
                 pokPerPage={pokPerPage}
-                allPok ={allPok.length}
+                pokemon ={pokemon.length}
                 paginado ={paginado}
                 
                 />

@@ -1,4 +1,4 @@
-*,
+/* *,
 *::before,
 *::after {
 	box-sizing: border-box;
@@ -140,4 +140,4 @@
 	transform: translate(-50%, -50%);
 	width: 30px;
 	z-index: 1;
-}
+} */

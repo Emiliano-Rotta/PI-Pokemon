@@ -1,10 +1,10 @@
 import React from "react"
 import style from "./Paginado.module.css";
 
-export default function Paginado ({pokPerPage, allPok, paginado }){
+export default function Paginado ({pokPerPage, pokemon, paginado }){
     const numeroPagina = []
 
-    for (let i = 0; i < Math.ceil(allPok/pokPerPage); i++) {
+    for (let i = 0; i < Math.ceil(pokemon/pokPerPage); i++) {
         numeroPagina.push (i+1)
     }
     return(

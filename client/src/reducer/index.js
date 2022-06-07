@@ -1,11 +1,9 @@
-// import { SET_LOADING } from '../actions/index';
 const initialState ={
     pokemon: [],
     allPok: [],
     types: [],
     detail: [],
-    // loading: false,
-    // loading: "Loading...",
+
 }
 
     function rootReducer (state = initialState, action){
@@ -107,19 +105,32 @@ const initialState ={
                 case "FILTER_BY_TYPES":
             
                     const allPok = state.allPok;
-                    const typeFiltered = allPok.filter(e => (e.types[0]?.name === action.payload || e.types[1]?.name === action.payload || e.types[2]?.name === action.payload || e.types[3]?.name === action.payload || e.types[4]?.name === action.payload || e.types[5]?.name === action.payload))
-
+                    const typeFiltered = allPok.filter(e => (e.types[0]?.name === action.payload                               || e.types[1]?.name === action.payload || e.types[2]?.name === action.payload || e.types[3]?.name === action.payload || e.types[4]?.name === action.payload || e.types[5]?.name === action.payload))
+                    if (typeFiltered.length !== 0)
                     return {
                         ...state, 
                         pokemon: typeFiltered,
                     };
-
-
-            //     case SET_LOADING:
-            //         return {
-            //         ...state,
-            //         loading: (action.payload)
-            // }       
+                    else {
+                        return {
+                            ...state, 
+                            types: state.types
+                                      
+                        };
+                        
+                        // ...state, 
+                        // pokemon: allPok,
+                        
+                        // alert ("Filtro no encontrado, prueba con filtros que no sean: fighting, rock, ghost, steel, psychic, ice, dragon, dark, unknown, shadow")
+                    }
+     
+                    //VOLVER
+                    case "VOLVER":
+                return {
+                        ...state, 
+                        pokemon: state.allPok,
+                  
+                }
 
                 default:
                     return state;
@@ -127,6 +138,4 @@ const initialState ={
             }   
 
             
-            export default rootReducer;
-            
-        
+            export default rootReducer;        

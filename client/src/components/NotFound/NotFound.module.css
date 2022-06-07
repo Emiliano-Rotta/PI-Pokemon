@@ -1,0 +1,20 @@
+.boton {
+    background-color: red;
+	border-radius:5px;
+	/* display:inline-block; */
+	cursor:pointer;
+	color: white;
+	font-family:Verdana;
+	font-size:14px;
+	font-weight:bold;
+	font-style:black;
+	padding:7px 40px;
+	text-decoration:none;
+	margin-right: 10px;
+	/* margin-bottom: 30px; */
+	margin-top: 20px;
+}
+.boton:hover{
+	background-color: #acaaa5;
+	color: black;
+	}

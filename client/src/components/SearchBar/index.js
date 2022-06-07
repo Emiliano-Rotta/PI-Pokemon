@@ -14,7 +14,7 @@ export default function SearchBar({setCurrentPage}){
     function handleInputChange (e){
     e.preventDefault()
     setName(e.target.value)
-    console.log (name)
+    // console.log (name)
     
 
     }
@@ -25,7 +25,7 @@ export default function SearchBar({setCurrentPage}){
 
         if(name !== ""){
         dispatch(getNamePok(name));
-        console.log (name)
+        // console.log (name)
         // setName("");
     }
 
@@ -34,7 +34,7 @@ export default function SearchBar({setCurrentPage}){
         }
     }
 
-    // if (!allPok.length>0) { 
+
 
     return (
        
@@ -55,5 +55,4 @@ export default function SearchBar({setCurrentPage}){
             </div></form>
         </div>
     )
-// } else { return <img className ={style.gif} src = "https://stickers.wiki/static/stickers/pokeanimated/file_61981.gif"></img>} 
-}
+    }
