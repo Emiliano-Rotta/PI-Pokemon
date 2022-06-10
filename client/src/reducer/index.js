@@ -3,7 +3,6 @@ const initialState ={
     allPok: [],
     types: [],
     detail: [],
-
 }
 
     function rootReducer (state = initialState, action){
@@ -64,14 +63,25 @@ const initialState ={
                     }
     
                 case "ORDER_BY_ATTACK": 
-                let sortedArrAttack = action.payload === 'ascA' ? 
+                let sortedArrAttack = action.payload === 'desA' ? 
                 state.pokemon.sort(function (a, b){
-                 
-                    return b.attack - a.attack;
-                }) :
+                    if (a.attack > b.attack) {
+                        return 1;
+                    }
+                    if (b.attack > a.attack) {
+                        return - 1;
+                    }
+                    return 0;
+                }) : 
                 state.pokemon.sort(function(a, b){
-                 
-                    return a.attack - b.attack;
+                    if (a.attack > b.attack) {
+                        return -1;
+                    }
+                    if (b.attack > a.attack) {
+                        return  1;
+                    }
+                    return 0;
+            
                 })
                 return{
                 ...state,
@@ -93,6 +103,7 @@ const initialState ={
                 case "POST_POK":
                 return {
                     ...state,
+                    
                 }
 
                case "GET_TIPO":
@@ -110,6 +121,7 @@ const initialState ={
                     return {
                         ...state, 
                         pokemon: typeFiltered,
+                        
                     };
                     else {
                         return {

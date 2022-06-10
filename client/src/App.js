@@ -13,7 +13,7 @@ function App() {
     <Switch>
         <Route exact path = "/" component = {Landingpage}/>
         <Route exact path = "/home" component = {Home}/>
-        <Route exact path= "/home/:id" component = {Detail}/>
+        <Route path= "/home/:id" component = {Detail}/>
         <Route exact path = "/types" component = {PokCreate}/>
         <Route exact path="/404notFound" component={NotFound} />
         <Route path="/:any" ><Redirect to="/404notFound" /> </Route>

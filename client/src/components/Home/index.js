@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { useState, useEffect } from "react";
-import {useDispatch, useSelector} from "react-redux";  //usa hook
+import {useDispatch, useSelector} from "react-redux";  //hook
 import {getpok, orderByAttack, orderByName, filterCreated, getTipo, filterPokByTypes, volver  } from "../../actions";
 import {Link} from "react-router-dom";
 import Card from "../Card";
@@ -90,7 +90,6 @@ const types = useSelector ((state) =>state.types)
             <div>
             
             <h2 className ={style.titulo}> Atraparlos mi prueba es, entrenarlos mi ideal!! <SearchBar setCurrentPage = {setCurrentPage} /> </h2>
-
             
             </div>
           
@@ -98,7 +97,7 @@ const types = useSelector ((state) =>state.types)
             <div className ={style.contenedorBotones}> 
            
                   <label className={style.boton1}>
-                    Tipos: 
+                     {"Tipos:   "}
                   
              <select   className ={style.boton2} onChange ={(e)=>handleSelect(e)}>
              
@@ -138,7 +137,7 @@ const types = useSelector ((state) =>state.types)
              
 
             
-            </div><br/><br/><br/><br/>
+            </div>
             {/* <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img> */}
             <img className ={style.imagen}src = "https://pngimg.com/uploads/pokemon/pokemon_PNG98.png"></img>
             {/* <img className ={style.imagen2}src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c31f.png"></img>           */}
@@ -150,6 +149,8 @@ const types = useSelector ((state) =>state.types)
                 pokPerPage={pokPerPage}
                 pokemon ={pokemon.length}
                 paginado ={paginado}
+                currentPage ={currentPage}
+                
                 
                 />
              
@@ -184,6 +185,7 @@ const types = useSelector ((state) =>state.types)
                 pokPerPage={pokPerPage}
                 pokemon ={pokemon.length}
                 paginado ={paginado}
+                currentPage ={currentPage}
                 
                 />
              

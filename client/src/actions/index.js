@@ -28,8 +28,9 @@ export function getNamePok(name){
 
             })
         }catch (error){
+            
             alert ("Pokemon no encontrado, verifique haber escrito bien el nombre")
-        console.log (error)
+        // console.log (error)
     }
 }
 }
@@ -111,3 +112,5 @@ export function filterPokByTypes(payload){
         }
     
     }  
+
+    

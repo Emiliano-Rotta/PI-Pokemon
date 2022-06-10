@@ -10,25 +10,17 @@ export default function PokCreate(){
     const types = useSelector((state)=> state.types)
     const allPok = useSelector((state) => state.allPok)
     const [errors, setErrors] = useState({})
-
     const[input, setInput] = useState({
-        name: "",
-        image: "",
-        life: "",
-        attack: "",
-        defense: "",
-        speed: "",
-        height: "", 
-        weight: "",
-        types: [],
+
+        name: "", image: "", life: "", attack: "", defense: "", speed: "", height: "",  weight: "", types: [],
         
     })
 
         function validate(input){
             let errors = {};
 
-            if  ( allPok.find ( (e)  =>  e.name.toUpperCase ()  ===  input.name.toUpperCase () )                               || input.name === "ditto" || input.name === "zubat"){
-                errors.name = "Ya existe un pokemon con ese nombre, prueba con escoger otro";
+            if  ( allPok.find ( (e)  =>  e.name.toUpperCase ()  ===  input.name.toUpperCase () )                                         || input.name === "meowth" || input.name === "ditto")
+                {errors.name = "Ya existe un pokemon con ese nombre, prueba con escoger otro";
             }
             if(!input.name || !/^[a-z]+[A-Za-z0-9\s]+$/g.test(input.name)){
                 errors.name = 'Al menos dos caracteres el primero, letra minúscula.';
@@ -55,9 +47,6 @@ export default function PokCreate(){
             if (!input.image || !/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&//=]*)/.test(input.image) ){
                 errors.image = 'Debe ser una URL';
             }
-            if (!input.types){
-                errors.types = 'Elegir minimo un tipo';
-            }
             return errors
 
 
@@ -81,17 +70,18 @@ function handleChange(e){
 }
 
 function handleSelect(e){
-     if (input.types.includes(e.target.value)) {
+     if(input.types.includes(e.target.value)){
         setInput({
-          ...input,
-          types: input.types,
-        });
-      } else {
-      setInput({
+         ...input,
+        types: input.types,
+    })
+     }
+    else {setInput({
         ...input,
-        types: [...input.types, e.target.value],
+        types: [...input.types, e.target.value], //lo que ya habia mas el target value
       });
-    }
+      }
+    
   };
 
    
@@ -214,7 +204,7 @@ function handleSelect(e){
                 <input  
                 autocomplete="off"  
                 type="number" 
-                value={input.defense} 
+                value={input.defense } 
                 name='defense' 
                 placeholder="Defensa. (*)"  
                 onChange={(e)=>handleChange(e)} 
@@ -246,14 +236,16 @@ function handleSelect(e){
        
             <br/>
             Tipos de Pokemons: (*)<br/>
-            {errors.types && (<p className= {style.error} >{errors.types}</p>)} <br/>
-                                        
-            <select  onChange={(e)=> handleSelect(e)} className={style.tipos}>
+                                                    
+            <select  onChange={(e)=> handleSelect(e)} className={style.tipos}> 
             {types && types.map((t)=>(
             <option 
              
             value={t.name} 
-            key={t.id}>{t.name}
+            key={t.id}>
+            Tipo {" "}
+            {t.name}
+            
             </option> 
             ))}
 

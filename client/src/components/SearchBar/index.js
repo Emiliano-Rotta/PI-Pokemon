@@ -8,7 +8,7 @@ import style from './SearchBar.module.css';
 export default function SearchBar({setCurrentPage}){
     const dispatch = useDispatch()
     const [name, setName] = useState ("")
-    const allPok = useSelector ((state) => state.detail);
+    // const detail = useSelector ((state) => state.detail);
 
 
     function handleInputChange (e){

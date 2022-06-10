@@ -4,20 +4,20 @@ const { Pokemon, Type } = require("../db")
 const axios = require("axios");
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
-
 const router = Router();
-
 // Configurar los routers
 // Ejemplo: router.use('/auth', authRouter);
+
+
 
 
 //me traigo la info de la api ver esta ruta!!!!!
 const api = async () => {
   try {
-    const pokeUrl = await axios.get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=40");
-    const pokeUrls = pokeUrl.data.results.map((e) => axios.get(e.url));
-    const allPokeUrls = await axios.all(pokeUrls);
-    const pokemon = allPokeUrls.map((p) => {
+    const todos = await axios.get("https://pokeapi.co/api/v2/pokemon?offset=0&limit=40"); //name +url con info =898
+    const nameUrl = todos.data.results.map((e) => axios.get(e.url)); //cada URL tiene mucha info
+    const todasUrl = await axios.all(nameUrl);
+    const pokemon = todasUrl.map((p) => {
       return {
         id: p.data.id,
         name: p.data.name,
@@ -38,7 +38,7 @@ const api = async () => {
     });
     return pokemon;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
   }
 };
 
@@ -58,6 +58,7 @@ const baseDatos = async () => {
     console.log("Hubo un error en baseDatos", error)
   }
 };
+
 //las concateno a ambos
 const concatenada = async () => {
   try {
@@ -66,9 +67,11 @@ const concatenada = async () => {
     const allInfo = apiInfo.concat(dbInfo);
     return allInfo;
   } catch (error) {
-    console.log("Se encontro un error en concatenada", error)
+    // console.log("Se encontro un error en concatenada", error)
   }
 };
+
+
 //2
 router.get("/pokemons/:id", async (req, res) => {
   const id = req.params.id;
@@ -84,7 +87,7 @@ router.get("/pokemons/:id", async (req, res) => {
         var poke = {
           id: pokemon.data.id,
           name: pokemon.data.name,
-          image: pokemon.data.sprites.other["official-artwork"].front_default, //TARDA 5 SEGUNDOS
+          image: pokemon.data.sprites.other["official-artwork"].front_default, 
           life: pokemon.data.stats[0].base_stat,
           attack: pokemon.data.stats[1].base_stat,
           defense: pokemon.data.stats[2].base_stat,
@@ -101,22 +104,26 @@ router.get("/pokemons/:id", async (req, res) => {
 
       } catch (error) {
         res.status(404).send("No se encontro el Pokemon")
-        console.log("no esta el ID pokemon en la API", error)
+        // console.log("en la ruta ID hay este errror:   ", error)
       }
 
     }
   } else {
     
-    res.status(200).send(dbInfo)
+    res.status(200).send(allPokemon)
   }
 });
+
+
+
 
 //3
 router.get("/pokemons", async (req, res) => {
   const name = req.query.name;
-  const dbInfo = await concatenada()
+  const BaseDatos = await baseDatos()
+  const concatenadas = await concatenada()
   if (name) {
-    let pokName = await dbInfo.filter(e => e.name.toLowerCase() === name.toLowerCase());//lo pasa a minuscula.. filter pregunta
+    let pokName = await BaseDatos.filter(e => e.name.toLowerCase() === name.toLowerCase());//lo pasa a minuscula.. filter pregunta
     if (pokName.length) {
       res.status(200).send(pokName)
     }
@@ -134,22 +141,20 @@ router.get("/pokemons", async (req, res) => {
           height: pokemon.data.height,
           weight: pokemon.data.weight,
           types: pokemon.data.types.map(t => {
-            return {
-              name: t.type.name,
-            }
-          }),
+            return {name: t.type.name,}}),
+
         };
         res.status(200).send([poke]);
 
       } catch (error) {
-        res.status(404).send("escribi bien!!!!!!!!")
-        console.log("no esta el pokemon en la API", error)
+        res.status(404).send("Pokemon mal escrito")
+        // console.log("no esta el pokemon en la API", error)
       }
 
     }
   } else {
     
-    res.status(200).send(dbInfo)
+    res.status(200).send(concatenadas)
   }
 });
 
@@ -159,31 +164,14 @@ router.get("/pokemons", async (req, res) => {
 router.post('/pokemons', async (req, res) => {
   try {
 
-    let {
-      name,
-      image,
-      life,
-      attack,
-      defense,
-      speed,
-      height,
-      weight,
-      types,
-      createdInDb } = req.body
+    let {name, image, life, attack, defense, speed, height, weight, types, createdInDb } = req.body
 
-    let pokCreated = await Pokemon.create({
-      name,
-      image,
-      life,
-      attack,
-      defense,
-      speed,
-      height,
-      weight,
-      createdInDb
+    let pokCreated = await Pokemon.create(
 
-    })
-
+    {name, image, life, attack, defense, speed, height, weight, createdInDb}
+    
+    )
+      
     let typeDb = await Type.findAll({
       where: { name: types }
     })
@@ -193,7 +181,7 @@ router.post('/pokemons', async (req, res) => {
 
   }
   catch (error) {
-    console.log("Se presento un error en el Post", error)
+    // console.log("Se presento un error en el Post", error)
   }
 }
 );
@@ -201,26 +189,29 @@ router.post('/pokemons', async (req, res) => {
 //5
 router.get('/types', async (req, res) => {
   try {
-    const api = await axios.get("https://pokeapi.co/api/v2/type"); //Trae todos los tipos
 
-    const types = await api.data // trae la respuesta en data
+    const api = await axios.get("https://pokeapi.co/api/v2/type"); //Trae todos los tipos
+    const types = await api.data 
     
-    for (i of types.results) { //entra a la propiedad results, a cada elemento
-      const find = await Type.findOne({ where: { name: i.name } }); // Entra a la propiedad name y busca si ya existe 
+    for (i of types.results) { //entra a la propiedad results [{}], a cada elemento
+      const find = await Type.findOne({ where: { name: i.name } }); // Entra a la propiedad name y no a la URL
      
       if (!find) { // Si no lo encuentra..
-        await Type.create({ name: i.name }); //Lo agrega a la base de datos
+        await Type.create({ name: i.name }); //Lo agrega a la base de datos findOrCreate
       } 
       else {
         return res.json(await Type.findAll()) // Sino devuelve todos los tipos
       }
     }
-    res.json(await Type.findAll()); //Finalmente devuelvo todos los tipos de la Db.
+    
+    res.json(await Type.findAll()); //devuelvo todos los tipos de la Db.
   
   } catch (error) {
-    console.log("Se presento un error en el GET types", error)
+    // console.log("Se presento un error en el GET types", error)
   }
 
 });
+
+
 
 module.exports = router;
