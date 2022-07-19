@@ -6,6 +6,7 @@
 </p>
 
 ## Link del video.
+https://www.linkedin.com/feed/update/urn:li:activity:6943334211676168192/
 
 ## Objetivos del Proyecto
 
